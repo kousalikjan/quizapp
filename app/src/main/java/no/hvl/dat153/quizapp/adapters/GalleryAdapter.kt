@@ -1,6 +1,5 @@
 package no.hvl.dat153.quizapp.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
