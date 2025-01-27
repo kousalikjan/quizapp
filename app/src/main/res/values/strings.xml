@@ -2,4 +2,7 @@
     <string name="app_name">quizapp</string>
     <string name="quiz_label">Quiz</string>
     <string name="gallery_label">Gallery</string>
+    <string name="add_entry">Add Entry</string>
+    <string name="sort_a_z">Sort A-Z</string>
+    <string name="sort_z_a">Sort Z-A</string>
 </resources>
