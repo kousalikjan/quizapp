@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">quizapp</string>
+    <string name="quiz_label">Quiz</string>
+    <string name="gallery_label">Gallery</string>
+    <string name="add_entry">Add Entry</string>
+    <string name="sort_a_z">Sort A-Z</string>
+    <string name="sort_z_a">Sort Z-A</string>
+    <string name="delete">Delete</string>
+    <string name="quiz_gallery_image">Quiz gallery image</string>
+    <string name="please_enter_a_name">Please enter a name.</string>
+    <string name="please_select_an_image">Please select an image.</string>
+    <string name="invalid_entry">Invalid entry.</string>
+    <string name="image_label">Image label</string>
+    <string name="save">Save</string>
+    <string name="select_image">Select image</string>
 </resources>
