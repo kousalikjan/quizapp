@@ -1,6 +1,5 @@
 package no.hvl.dat153.quizapp.activities
 
-import android.app.ComponentCaller
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -36,19 +35,29 @@ class AddEntryActivity : AppCompatActivity() {
 
         buttonSave.setOnClickListener {
             val name = editText.text.toString()
-            if (name.isNotEmpty() && selectedImage != null) {
-                GalleryEntryRepository.entries.add(GalleryEntry(name, selectedImage!!))
-                finish()
+
+            if (name.isBlank()) {
+                handleNameError()
+                return@setOnClickListener
             }
-            else {
-                val message = when {
-                    name.isEmpty() -> getString(R.string.please_enter_a_name)
-                    selectedImage == null -> getString(R.string.please_select_an_image)
-                    else -> getString(R.string.invalid_entry)
-                }
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+            selectedImage?.let { image ->
+                GalleryEntryRepository.entries.add(GalleryEntry(name, image))
+                finish()
+            } ?: run {
+                handleImageError()
             }
         }
+    }
+
+    private fun handleNameError() {
+        val message = getString(R.string.please_enter_a_name)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun handleImageError() {
+        val message = getString(R.string.please_select_an_image)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     /**
