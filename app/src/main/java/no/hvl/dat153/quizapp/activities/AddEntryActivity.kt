@@ -54,8 +54,8 @@ class AddEntryActivity : AppCompatActivity() {
     /**
      * Loads the selected image into the imageView preview
      */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?, caller: ComponentCaller) {
-        super.onActivityResult(requestCode, resultCode, data, caller)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             val uri = data.data
             if (uri != null) {
