@@ -16,8 +16,11 @@ import kotlinx.coroutines.launch
 import no.hvl.dat153.quizapp.R
 import no.hvl.dat153.quizapp.models.GalleryEntry
 import no.hvl.dat153.quizapp.models.QuizEntry
+import no.hvl.dat153.quizapp.usecase.GetRandomQuizEntryUseCase
 
-class QuizActivity : AppCompatActivity() {
+class QuizActivity(
+    private val getQuizEntryUseCase: GetRandomQuizEntryUseCase = GetRandomQuizEntryUseCase()
+) : AppCompatActivity() {
 
     private lateinit var scoreCorrect: TextView
     private lateinit var scoreIncorrect: TextView
@@ -55,6 +58,8 @@ class QuizActivity : AppCompatActivity() {
 
         setupOnClickListeners()
         observeScreenState()
+
+        generateNewQuizEntry()
     }
 
     private fun setupOnClickListeners() {
@@ -122,7 +127,12 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun onContinueClick() {
+        generateNewQuizEntry()
+    }
 
+    private fun generateNewQuizEntry() {
+        // TODO not handling case when there are no entries
+        getQuizEntryUseCase()?.let(::onNewQuizEntry)
     }
 
     private fun onNewQuizEntry(quizEntry: QuizEntry) {
