@@ -1,7 +1,9 @@
 package no.hvl.dat153.quizapp.activities
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -25,9 +27,9 @@ class QuizActivity(
     private lateinit var scoreCorrect: TextView
     private lateinit var scoreIncorrect: TextView
     private lateinit var imageView: ImageView
+    private lateinit var returnButton: ImageButton
     private lateinit var optionsButtons: List<Button>
     private lateinit var continueButton: Button
-    private var defaultButtonBackground: Int? = null
 
     private val scoreCorrectStream = MutableStateFlow(0)
     private val scoreIncorrectStream = MutableStateFlow(0)
@@ -48,13 +50,13 @@ class QuizActivity(
         scoreCorrect = findViewById(R.id.scoreCorrect)
         scoreIncorrect = findViewById(R.id.scoreIncorrect)
         imageView = findViewById(R.id.imageView)
+        returnButton = findViewById(R.id.btnReturn)
         optionsButtons = listOf(
             findViewById(R.id.btnOption1),
             findViewById(R.id.btnOption2),
             findViewById(R.id.btnOption3)
         )
         continueButton = findViewById(R.id.btnContinue)
-        defaultButtonBackground = optionsButtons.firstOrNull()?.solidColor
 
         setupOnClickListeners()
         observeScreenState()
@@ -63,6 +65,7 @@ class QuizActivity(
     }
 
     private fun setupOnClickListeners() {
+        returnButton.setOnClickListener { finish() }
         optionsButtons.forEachIndexed { index, button ->
             button.setOnClickListener {
                 screenStateStream.value?.currentQuizEntry?.options?.get(index)?.let { selectedName ->
@@ -86,7 +89,8 @@ class QuizActivity(
         scoreIncorrect.text = getString(R.string.incorrect, screenState.scoreIncorrect.toString())
         imageView.setImageBitmap(screenState.currentQuizEntry.quizItem.image)
         optionsButtons.forEachIndexed { index, button ->
-            button.text = screenState.currentQuizEntry.options[index].value
+            val option = screenState.currentQuizEntry.options.getOrNull(index)
+            option?.let { button.text = option.value }
         }
         screenState.selectedName?.let { selectedName ->
             val correctName = screenState.currentQuizEntry.quizItem.name
@@ -99,13 +103,20 @@ class QuizActivity(
                 selectedButton?.setBackgroundColor(getColor(R.color.red))
             }
         } ?: run {
-            defaultButtonBackground?.let { color ->
-                optionsButtons.forEach { button -> button.setBackgroundColor(color) }
-            }
+            optionsButtons.forEach { button -> button.setBackgroundColor(getColor(R.color.dark_gray)) }
+        }
+        continueButton.visibility = if (screenState.isAnswered) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
         }
     }
 
     private fun onSelectedName(selectedName: GalleryEntry.Name) {
+        if (screenStateStream.value?.isAnswered == true) {
+            return
+        }
+
         selectedNameStream.value = selectedName
         increaseScore()
     }
@@ -147,6 +158,7 @@ class QuizActivity(
         val selectedName: GalleryEntry.Name?
     ) {
 
+        val isAnswered = selectedName != null
         val isCorrect = selectedName == currentQuizEntry.quizItem.name
 
         companion object {
