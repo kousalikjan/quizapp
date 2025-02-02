@@ -42,7 +42,7 @@ class AddEntryActivity : AppCompatActivity() {
             }
 
             selectedImage?.let { image ->
-                GalleryEntryRepository.entries.add(GalleryEntry(name, image))
+                GalleryEntryRepository.entries.add(GalleryEntry(GalleryEntry.Name(name), image))
                 finish()
             } ?: run {
                 handleImageError()

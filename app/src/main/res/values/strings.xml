@@ -13,4 +13,7 @@
     <string name="image_label">Image label</string>
     <string name="save">Save</string>
     <string name="select_image">Select image</string>
+    <string name="correct">Correct: %s</string>
+    <string name="incorrect">Incorrect: %s</string>
+    <string name="continueQuiz">Continue</string>
 </resources>
