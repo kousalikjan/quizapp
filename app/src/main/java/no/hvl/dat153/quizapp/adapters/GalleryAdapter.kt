@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import no.hvl.dat153.quizapp.R
 import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
 
-class GalleryAdapter: RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
+class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.image)
