@@ -27,7 +27,7 @@ class GalleryAdapter: RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entry = GalleryEntryRepository.entries[position]
         holder.image.setImageBitmap(entry.image)
-        holder.name.text = entry.name
+        holder.name.text = entry.name.value
 
         holder.buttonDelete.setOnClickListener {
             GalleryEntryRepository.entries.removeAt(position)

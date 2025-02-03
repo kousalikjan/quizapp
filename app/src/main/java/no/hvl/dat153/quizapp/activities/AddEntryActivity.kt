@@ -34,10 +34,15 @@ class AddEntryActivity : AppCompatActivity() {
         }
 
         buttonSave.setOnClickListener {
-            val name = editText.text.toString()
+            val name = GalleryEntry.Name(editText.text.toString())
 
-            if (name.isBlank()) {
+            if (name.value.isBlank()) {
                 handleNameError()
+                return@setOnClickListener
+            }
+
+            if (name in GalleryEntryRepository.entries.map { it.name }) {
+                handleNameAlreadyExists()
                 return@setOnClickListener
             }
 
@@ -57,6 +62,11 @@ class AddEntryActivity : AppCompatActivity() {
 
     private fun handleImageError() {
         val message = getString(R.string.please_select_an_image)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun handleNameAlreadyExists() {
+        val message = getString(R.string.name_already_exists)
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
