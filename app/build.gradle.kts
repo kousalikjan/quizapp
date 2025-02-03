@@ -47,6 +47,7 @@ tasks.withType<Detekt>().configureEach {
     reports {
         sarif.required.set(true)
     }
+    basePath = rootProject.projectDir.absolutePath
 }
 
 dependencies {
