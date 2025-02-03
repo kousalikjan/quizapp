@@ -28,7 +28,6 @@ class AddEntryActivity : AppCompatActivity() {
         val buttonAdd: Button = findViewById(R.id.addEntryButtonAdd)
         val buttonSave: Button = findViewById(R.id.addEntryButtonSave)
 
-
         buttonAdd.setOnClickListener {
             startActivityForResult(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 1)
         }

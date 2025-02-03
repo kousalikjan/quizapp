@@ -1,0 +1,25 @@
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
+comments:
+  AbsentOrWrongFileLicense:
+    active: false
+style:
+  MaxLineLength:
+    maxLineLength: 150
+
+complexity:
+  TooManyFunctions:
+    active: false
+
+formatting:
+  MaximumLineLength:
+    maxLineLength: 150
+  ArgumentListWrapping:
+    maxLineLength: 150
+  ParameterWrapping:
+    maxLineLength: 150
+  ParameterListWrapping:
+    maxLineLength: 150
+  Wrapping:
+    maxLineLength: 150
