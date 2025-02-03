@@ -22,10 +22,20 @@ class GalleryActivity : AppCompatActivity() {
         recyclerView.adapter = GalleryAdapter()
 
         val buttonAddEntry: Button = findViewById(R.id.buttonAddEntry)
+        val buttonSortAsc: Button = findViewById(R.id.buttonSortAsc)
+        val buttonSortDesc: Button = findViewById(R.id.buttonSortDesc)
 
         buttonAddEntry.setOnClickListener {
             val intent = Intent(this, AddEntryActivity::class.java)
             startActivity(intent)
+        }
+
+        buttonSortAsc.setOnClickListener {
+            (recyclerView.adapter as? GalleryAdapter)?.sortItemsAscending()
+        }
+
+        buttonSortDesc.setOnClickListener {
+            (recyclerView.adapter as? GalleryAdapter)?.sortItemsDescending()
         }
     }
 
