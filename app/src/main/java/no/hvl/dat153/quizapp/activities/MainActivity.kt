@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, GalleryActivity::class.java))
         }
         buttonQuiz.setOnClickListener {
-            if (GalleryEntryRepository.entries.size < 3) {
+            if (GalleryEntryRepository.entries.size < MIN_NUMBER_ENTRIES) {
                 handleNotEnoughEntries()
                 return@setOnClickListener
             }
@@ -42,5 +42,10 @@ class MainActivity : AppCompatActivity() {
     private fun handleNotEnoughEntries() {
         val message = getString(R.string.not_enough_entries)
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+
+        private const val MIN_NUMBER_ENTRIES = 3
     }
 }
