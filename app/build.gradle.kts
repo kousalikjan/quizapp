@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -39,6 +41,12 @@ android {
 detekt {
     buildUponDefaultConfig = true
     config.setFrom("../detekt-config.yml")
+}
+
+tasks.withType<Detekt>().configureEach {
+    reports {
+        sarif.required.set(true)
+    }
 }
 
 dependencies {
