@@ -30,7 +30,7 @@ class GalleryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        buttonSortAsc.setOnClickListener{
+        buttonSortAsc.setOnClickListener {
             (recyclerView.adapter as? GalleryAdapter)?.sortItemsAscending()
         }
 
