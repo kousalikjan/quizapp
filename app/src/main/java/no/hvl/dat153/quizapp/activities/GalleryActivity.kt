@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import no.hvl.dat153.quizapp.R
 import no.hvl.dat153.quizapp.adapters.GalleryAdapter
-import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
 
 class GalleryActivity : AppCompatActivity() {
 

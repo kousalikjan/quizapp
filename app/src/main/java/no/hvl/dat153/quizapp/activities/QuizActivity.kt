@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -68,7 +69,7 @@ class QuizActivity(
         returnButton.setOnClickListener { finish() }
         optionsButtons.forEachIndexed { index, button ->
             button.setOnClickListener {
-                screenStateStream.value?.currentQuizEntry?.options?.get(index)?.let { selectedName ->
+                screenStateStream.value?.currentQuizEntry?.options?.getOrNull(index)?.let { selectedName ->
                     onSelectedName(selectedName)
                 }
             }
@@ -142,7 +143,6 @@ class QuizActivity(
     }
 
     private fun generateNewQuizEntry() {
-        // TODO not handling case when there are no entries
         getQuizEntryUseCase()?.let(::onNewQuizEntry)
     }
 

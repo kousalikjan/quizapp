@@ -3,6 +3,7 @@ package no.hvl.dat153.quizapp.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -30,7 +31,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, GalleryActivity::class.java))
         }
         buttonQuiz.setOnClickListener {
+            if (GalleryEntryRepository.entries.size < 3) {
+                handleNotEnoughEntries()
+                return@setOnClickListener
+            }
             startActivity(Intent(this, QuizActivity::class.java))
         }
+    }
+
+    private fun handleNotEnoughEntries() {
+        val message = getString(R.string.not_enough_entries)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
