@@ -8,6 +8,9 @@ on:
     branches:
       - master
 
+permissions:
+  security-events: write
+
 jobs:
   detekt:
     name: Run Detekt
