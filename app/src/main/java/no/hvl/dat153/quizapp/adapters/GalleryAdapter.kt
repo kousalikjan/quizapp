@@ -37,4 +37,14 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     }
 
     override fun getItemCount() = GalleryEntryRepository.entries.size
+
+    fun sortItemsAscending() {
+        GalleryEntryRepository.entries.sortBy { it.name.value.lowercase() }
+        notifyDataSetChanged()
+    }
+
+    fun sortItemsDescending() {
+        GalleryEntryRepository.entries.sortByDescending { it.name.value.lowercase() }
+        notifyDataSetChanged()
+    }
 }
