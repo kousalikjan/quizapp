@@ -8,6 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import no.hvl.dat153.quizapp.R
 import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
 
@@ -23,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         GalleryEntryRepository.initialize(this)
+        lifecycleScope.launch {
+            GalleryEntryRepository.initializeData(this@MainActivity)
+        }
 
         val buttonGallery = findViewById<Button>(R.id.buttonGallery)
         val buttonQuiz = findViewById<Button>(R.id.buttonQuiz)
@@ -31,11 +36,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, GalleryActivity::class.java))
         }
         buttonQuiz.setOnClickListener {
-            if (GalleryEntryRepository.entries.size < MIN_NUMBER_ENTRIES) {
-                handleNotEnoughEntries()
-                return@setOnClickListener
+            lifecycleScope.launch {
+                if (GalleryEntryRepository.getCount() < MIN_NUMBER_ENTRIES) {
+                    handleNotEnoughEntries()
+                    return@launch
+                }
+                startActivity(Intent(this@MainActivity, QuizActivity::class.java))
             }
-            startActivity(Intent(this, QuizActivity::class.java))
         }
     }
 

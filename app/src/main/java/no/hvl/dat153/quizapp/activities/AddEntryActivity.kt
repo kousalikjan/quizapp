@@ -1,8 +1,7 @@
 package no.hvl.dat153.quizapp.activities
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
@@ -10,14 +9,16 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.models.GalleryEntry
 import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
+import java.io.File
 
 class AddEntryActivity : AppCompatActivity() {
 
     private lateinit var imageView: ImageView
-    private var selectedImage: Bitmap? = null
+    private var selectedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,39 +34,55 @@ class AddEntryActivity : AppCompatActivity() {
         }
 
         buttonSave.setOnClickListener {
-            val name = GalleryEntry.Name(editText.text.toString())
+            val name = editText.text.toString()
 
-            if (name.value.isBlank()) {
+            if (name.isBlank()) {
                 handleNameError()
                 return@setOnClickListener
             }
 
-            if (name in GalleryEntryRepository.entries.map { it.name }) {
-                handleNameAlreadyExists()
-                return@setOnClickListener
-            }
+            lifecycleScope.launch {
+                if (GalleryEntryRepository.getByName(name) != null) {
+                    handleNameAlreadyExists()
+                    return@launch
+                }
+                val inputStream = selectedImageUri?.let(contentResolver::openInputStream)
+                if (inputStream == null) {
+                    handleSaveError()
+                    return@launch
+                }
 
-            selectedImage?.let { image ->
-                GalleryEntryRepository.entries.add(GalleryEntry(name, image))
-                finish()
-            } ?: run {
-                handleImageError()
+                selectedImageUri?.let {
+                    GalleryEntryRepository.insertEntry(
+                        name = name,
+                        inputStream = inputStream,
+                        storageDir = File(filesDir, "gallery")
+                    )
+                    finish()
+                } ?: run {
+                    handleImageError()
+                }
             }
         }
     }
 
     private fun handleNameError() {
-        val message = getString(R.string.please_enter_a_name)
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        handleError(getString(R.string.please_enter_a_name))
     }
 
     private fun handleImageError() {
-        val message = getString(R.string.please_select_an_image)
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        handleError(getString(R.string.please_select_an_image))
     }
 
     private fun handleNameAlreadyExists() {
-        val message = getString(R.string.name_already_exists)
+        handleError(getString(R.string.name_already_exists))
+    }
+
+    private fun handleSaveError() {
+        handleError(getString(R.string.save_error))
+    }
+
+    private fun handleError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -75,12 +92,7 @@ class AddEntryActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            val uri = data.data
-            if (uri != null) {
-                val inputStream = contentResolver.openInputStream(uri)
-                selectedImage = BitmapFactory.decodeStream(inputStream)
-                imageView.setImageBitmap(selectedImage)
-            }
+            selectedImageUri = data.data
         }
     }
 }

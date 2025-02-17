@@ -34,7 +34,7 @@ class QuizActivity(
     private val scoreCorrectStream = MutableStateFlow(0)
     private val scoreIncorrectStream = MutableStateFlow(0)
     private val currentQuizEntryStream = MutableStateFlow<QuizEntry?>(null)
-    private val selectedNameStream = MutableStateFlow<GalleryEntry.Name?>(null)
+    private val selectedNameStream = MutableStateFlow<String?>(null)
     private val screenStateStream = combine(
         scoreCorrectStream,
         scoreIncorrectStream,
@@ -87,19 +87,19 @@ class QuizActivity(
     private fun applyState(screenState: ScreenState) {
         scoreCorrect.text = getString(R.string.correct, screenState.scoreCorrect.toString())
         scoreIncorrect.text = getString(R.string.incorrect, screenState.scoreIncorrect.toString())
-        imageView.setImageBitmap(screenState.currentQuizEntry.quizItem.image)
+        imageView.setImageURI(screenState.currentQuizEntry.quizItem.getUri())
         optionsButtons.forEachIndexed { index, button ->
             val option = screenState.currentQuizEntry.options.getOrNull(index)
-            option?.let { button.text = option.value }
+            option?.let { button.text = option }
         }
         screenState.selectedName?.let { selectedName ->
             val correctName = screenState.currentQuizEntry.quizItem.name
-            val correctButton = optionsButtons.find { it.text == correctName.value }
+            val correctButton = optionsButtons.find { it.text == correctName }
 
             correctButton?.setBackgroundColor(getColor(R.color.green))
 
             if (!screenState.isCorrect) {
-                val selectedButton = optionsButtons.find { it.text == selectedName.value }
+                val selectedButton = optionsButtons.find { it.text == selectedName }
                 selectedButton?.setBackgroundColor(getColor(R.color.red))
             }
         } ?: run {
@@ -112,7 +112,7 @@ class QuizActivity(
         }
     }
 
-    private fun onSelectedName(selectedName: GalleryEntry.Name) {
+    private fun onSelectedName(selectedName: String) {
         if (screenStateStream.value?.isAnswered == true) {
             return
         }
@@ -142,7 +142,9 @@ class QuizActivity(
     }
 
     private fun generateNewQuizEntry() {
-        getQuizEntryUseCase()?.let(::onNewQuizEntry)
+        lifecycleScope.launch {
+            getQuizEntryUseCase()?.let(::onNewQuizEntry)
+        }
     }
 
     private fun onNewQuizEntry(quizEntry: QuizEntry) {
@@ -154,7 +156,7 @@ class QuizActivity(
         val scoreCorrect: Int,
         val scoreIncorrect: Int,
         val currentQuizEntry: QuizEntry,
-        val selectedName: GalleryEntry.Name?
+        val selectedName: String?
     ) {
 
         val isAnswered = selectedName != null
@@ -166,7 +168,7 @@ class QuizActivity(
                 scoreCorrect: Int,
                 scoreIncorrect: Int,
                 currentQuizEntry: QuizEntry?,
-                selectedName: GalleryEntry.Name?
+                selectedName: String?
             ): ScreenState? {
                 return currentQuizEntry?.let { quizEntry ->
                     ScreenState(

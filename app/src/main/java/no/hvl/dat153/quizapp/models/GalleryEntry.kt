@@ -1,12 +1,15 @@
 package no.hvl.dat153.quizapp.models
 
-import android.graphics.Bitmap
+import android.net.Uri
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity
 data class GalleryEntry(
-    val name: Name,
-    val image: Bitmap
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    val name: String,
+    val uriString: String
 ) {
 
-    @JvmInline
-    value class Name(val value: String)
+    fun getUri(): Uri = Uri.parse(uriString)
 }
