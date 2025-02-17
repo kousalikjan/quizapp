@@ -8,9 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
+import no.hvl.dat153.quizapp.models.GalleryEntry
 
-class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
+class GalleryAdapter(
+    private var entries: List<GalleryEntry>,
+    private val onEntryDelete: (GalleryEntry) -> Unit,
+) : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.image)
@@ -25,26 +28,19 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val entry = GalleryEntryRepository.entries[position]
-        holder.image.setImageBitmap(entry.image)
-        holder.name.text = entry.name.value
+        val entry = entries[position]
+        holder.image.setImageURI(entry.getUri())
+        holder.name.text = entry.name
 
         holder.buttonDelete.setOnClickListener {
-            GalleryEntryRepository.entries.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, itemCount)
+            onEntryDelete(entries[position])
         }
     }
 
-    override fun getItemCount() = GalleryEntryRepository.entries.size
+    override fun getItemCount() = entries.size
 
-    fun sortItemsAscending() {
-        GalleryEntryRepository.entries.sortBy { it.name.value.lowercase() }
-        notifyDataSetChanged()
-    }
-
-    fun sortItemsDescending() {
-        GalleryEntryRepository.entries.sortByDescending { it.name.value.lowercase() }
+    fun setData(newData: List<GalleryEntry>) {
+        entries = newData
         notifyDataSetChanged()
     }
 }

@@ -7,10 +7,11 @@ class GetRandomQuizEntryUseCase(
     private val quizRepository: GalleryEntryRepository = GalleryEntryRepository
 ) {
 
-    operator fun invoke(): QuizEntry? {
-        val quizItem = quizRepository.entries.randomOrNull() ?: return null
+    suspend operator fun invoke(): QuizEntry? {
+        val entries = quizRepository.getAll()
+        val quizItem = entries.randomOrNull() ?: return null
         val correctOption = quizItem.name
-        val incorrectOptions = quizRepository.entries
+        val incorrectOptions = entries
             .map { it.name }
             .filter { it != correctOption }
             .shuffled()
