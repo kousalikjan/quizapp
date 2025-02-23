@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp.adapters
+package no.hvl.dat153.quizapp.presentation.gallery
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.models.GalleryEntry
+import no.hvl.dat153.quizapp.domain.models.GalleryEntry
 
 class GalleryAdapter(
     private var entries: List<GalleryEntry>,

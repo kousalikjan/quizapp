@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp.fragment
+package no.hvl.dat153.quizapp.presentation.quiz
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import no.hvl.dat153.quizapp.models.QuizEntry
-import no.hvl.dat153.quizapp.usecase.GetRandomQuizEntryUseCase
+import no.hvl.dat153.quizapp.domain.models.QuizEntry
+import no.hvl.dat153.quizapp.domain.usecase.GetRandomQuizEntryUseCase
 
 class QuizViewModel(
     private val getQuizEntryUseCase: GetRandomQuizEntryUseCase = GetRandomQuizEntryUseCase()

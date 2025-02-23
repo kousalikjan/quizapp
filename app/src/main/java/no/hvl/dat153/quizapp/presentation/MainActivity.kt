@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp.activities
+package no.hvl.dat153.quizapp.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
+import no.hvl.dat153.quizapp.domain.repositories.GalleryEntryRepository
+import no.hvl.dat153.quizapp.presentation.gallery.GalleryActivity
+import no.hvl.dat153.quizapp.presentation.quiz.QuizActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
