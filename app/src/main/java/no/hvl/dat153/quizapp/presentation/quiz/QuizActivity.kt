@@ -1,9 +1,8 @@
-package no.hvl.dat153.quizapp.activities
+package no.hvl.dat153.quizapp.presentation.quiz
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.fragment.QuizFragment
 
 class QuizActivity : AppCompatActivity() {
 

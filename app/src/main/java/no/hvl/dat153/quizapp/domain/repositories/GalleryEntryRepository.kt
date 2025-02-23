@@ -1,12 +1,12 @@
-package no.hvl.dat153.quizapp.repositories
+package no.hvl.dat153.quizapp.domain.repositories
 
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.database.AppDatabase
-import no.hvl.dat153.quizapp.datasource.filesystem.ImageLocalDataSource
-import no.hvl.dat153.quizapp.models.GalleryEntry
+import no.hvl.dat153.quizapp.data.filesystem.ImageLocalDataSource
+import no.hvl.dat153.quizapp.data.room.AppDatabase
+import no.hvl.dat153.quizapp.domain.models.GalleryEntry
 import java.io.File
 import java.io.InputStream
 

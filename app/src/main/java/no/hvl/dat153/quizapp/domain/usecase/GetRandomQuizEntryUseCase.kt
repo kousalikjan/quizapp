@@ -1,7 +1,7 @@
-package no.hvl.dat153.quizapp.usecase
+package no.hvl.dat153.quizapp.domain.usecase
 
-import no.hvl.dat153.quizapp.models.QuizEntry
-import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
+import no.hvl.dat153.quizapp.domain.models.QuizEntry
+import no.hvl.dat153.quizapp.domain.repositories.GalleryEntryRepository
 
 class GetRandomQuizEntryUseCase(
     private val quizRepository: GalleryEntryRepository = GalleryEntryRepository

@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp.activities
+package no.hvl.dat153.quizapp.presentation.gallery
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.adapters.GalleryAdapter
-import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
+import no.hvl.dat153.quizapp.domain.repositories.GalleryEntryRepository
+import no.hvl.dat153.quizapp.presentation.addentry.AddEntryActivity
 
 class GalleryActivity : AppCompatActivity() {
 

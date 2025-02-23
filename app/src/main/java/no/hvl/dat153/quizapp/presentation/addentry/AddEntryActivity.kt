@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp.activities
+package no.hvl.dat153.quizapp.presentation.addentry
 
 import android.content.Intent
 import android.net.Uri
@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
+import no.hvl.dat153.quizapp.domain.repositories.GalleryEntryRepository
 import java.io.File
 
 class AddEntryActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp.fragment
+package no.hvl.dat153.quizapp.presentation.quiz
 
 import android.os.Bundle
 import android.view.View

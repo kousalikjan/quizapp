@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp.datasource.filesystem
+package no.hvl.dat153.quizapp.data.filesystem
 
 import android.net.Uri
 import android.util.Log

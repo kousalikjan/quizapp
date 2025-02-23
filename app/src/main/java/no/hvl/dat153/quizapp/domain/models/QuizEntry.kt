@@ -1,4 +1,4 @@
-package no.hvl.dat153.quizapp.models
+package no.hvl.dat153.quizapp.domain.models
 
 data class QuizEntry(
     val quizItem: GalleryEntry,

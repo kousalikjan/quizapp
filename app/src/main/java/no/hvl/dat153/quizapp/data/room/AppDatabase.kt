@@ -1,11 +1,11 @@
-package no.hvl.dat153.quizapp.database
+package no.hvl.dat153.quizapp.data.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import no.hvl.dat153.quizapp.database.dao.GalleryEntryDao
-import no.hvl.dat153.quizapp.models.GalleryEntry
+import no.hvl.dat153.quizapp.data.room.dao.GalleryEntryDao
+import no.hvl.dat153.quizapp.domain.models.GalleryEntry
 
 @Database(entities = [GalleryEntry::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

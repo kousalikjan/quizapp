@@ -1,11 +1,11 @@
-package no.hvl.dat153.quizapp.database.dao
+package no.hvl.dat153.quizapp.data.room.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import no.hvl.dat153.quizapp.models.GalleryEntry
+import no.hvl.dat153.quizapp.domain.models.GalleryEntry
 
 @Dao
 interface GalleryEntryDao {
