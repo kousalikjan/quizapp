@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.models.GalleryEntry
 import no.hvl.dat153.quizapp.models.QuizEntry
 import no.hvl.dat153.quizapp.usecase.GetRandomQuizEntryUseCase
 
