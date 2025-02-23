@@ -13,12 +13,16 @@ class ImageLocalDataSource {
 
     @OptIn(ExperimentalUuidApi::class)
     fun saveImage(inputStream: InputStream, storageDir: File): Uri {
+        storageDir.mkdir()
         val outputFile = File.createTempFile("image_${Uuid.random()}", ".jpg", storageDir)
         val outputStream = outputFile.outputStream()
 
         try {
             inputStream.copyTo(outputStream)
             return outputFile.toUri()
+        } catch (t: Throwable) {
+            Log.w("ImageLocalDataSource", "Failed to save image", t)
+            throw t
         } finally {
             inputStream.close()
             outputStream.close()
@@ -27,7 +31,7 @@ class ImageLocalDataSource {
 
     fun deleteImage(uri: Uri) {
         try {
-            if (uri.scheme != "file://") return
+            if (uri.scheme != "file") return
 
             val file = uri.toFile()
             file.delete()

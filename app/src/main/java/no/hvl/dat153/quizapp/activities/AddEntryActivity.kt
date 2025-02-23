@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import no.hvl.dat153.quizapp.R
 import no.hvl.dat153.quizapp.repositories.GalleryEntryRepository
@@ -18,7 +19,7 @@ import java.io.File
 class AddEntryActivity : AppCompatActivity() {
 
     private lateinit var imageView: ImageView
-    private var selectedImageUri: Uri? = null
+    private var selectedImageUri = MutableStateFlow<Uri?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,21 +47,29 @@ class AddEntryActivity : AppCompatActivity() {
                     handleNameAlreadyExists()
                     return@launch
                 }
-                val inputStream = selectedImageUri?.let(contentResolver::openInputStream)
+                val inputStream = selectedImageUri.value?.let(contentResolver::openInputStream)
                 if (inputStream == null) {
-                    handleSaveError()
+                    handleImageError()
                     return@launch
                 }
 
-                selectedImageUri?.let {
-                    GalleryEntryRepository.insertEntry(
-                        name = name,
-                        inputStream = inputStream,
-                        storageDir = File(filesDir, "gallery")
-                    )
-                    finish()
-                } ?: run {
-                    handleImageError()
+                GalleryEntryRepository.insertEntry(
+                    name = name,
+                    inputStream = inputStream,
+                    storageDir = File(filesDir, "gallery")
+                )
+                finish()
+            }
+        }
+
+        setupObservingData()
+    }
+
+    private fun setupObservingData() {
+        lifecycleScope.launch {
+            selectedImageUri.collect { uri ->
+                if (uri != null) {
+                    imageView.setImageURI(uri)
                 }
             }
         }
@@ -78,10 +87,6 @@ class AddEntryActivity : AppCompatActivity() {
         handleError(getString(R.string.name_already_exists))
     }
 
-    private fun handleSaveError() {
-        handleError(getString(R.string.save_error))
-    }
-
     private fun handleError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -92,7 +97,7 @@ class AddEntryActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.data
+            selectedImageUri.value = data.data
         }
     }
 }
