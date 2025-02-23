@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.android.lifecycle.viewmodel)
+    implementation(libs.androidx.fragment)
 
     // Detekt
     detektPlugins(libs.detekt.formatting)
