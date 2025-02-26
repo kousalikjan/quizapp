@@ -22,5 +22,12 @@ abstract class AppDatabase : RoomDatabase() {
                 "app_database"
             ).build()
         }
+
+        fun initializeInMemory(context: Context){
+            db = Room.inMemoryDatabaseBuilder(
+                context,
+                AppDatabase::class.java
+            ).build()
+        }
     }
 }
