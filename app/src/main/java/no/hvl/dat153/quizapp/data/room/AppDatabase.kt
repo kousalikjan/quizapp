@@ -23,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
             ).build()
         }
 
-        fun initializeInMemory(context: Context){
+        fun initializeInMemory(context: Context) {
             db = Room.inMemoryDatabaseBuilder(
                 context,
                 AppDatabase::class.java
