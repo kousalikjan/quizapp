@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.android.lifecycle.viewmodel)
     implementation(libs.androidx.fragment)
+    implementation(libs.androidx.espresso.contrib)
 
     // Detekt
     detektPlugins(libs.detekt.formatting)

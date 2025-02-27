@@ -46,6 +46,15 @@ class QuizActivityTest {
     fun testCorrectAnswerIncreasesCorrectScore() {
         val buttonIds = listOf(R.id.btnOption1, R.id.btnOption2, R.id.btnOption3)
 
+        // List all button texts for debugging
+        buttonIds.forEach { buttonId ->
+            onView(withId(buttonId)).check { view, _ ->
+                val buttonText = (view as Button).text.toString()
+                println("Button text: $buttonText")
+            }
+        }
+
+
         // Click the correct button
         val correctButtonId = findAnswerButton(buttonIds, isCorrect = true)
         assertNotNull(correctButtonId)
@@ -81,7 +90,6 @@ class QuizActivityTest {
         scenario = ActivityScenario.launch(QuizActivity::class.java)
         scenario.onActivity { activity ->
             quizFragment = activity.supportFragmentManager.findFragmentById(R.id.fragment_container) as QuizFragment
-            assertNotNull("QuizFragment should be present", quizFragment)
             correctText0 = activity.getString(R.string.correct, "0")
             incorrectText0 = activity.getString(R.string.incorrect, "0")
             correctText1 = activity.getString(R.string.correct, "1")
