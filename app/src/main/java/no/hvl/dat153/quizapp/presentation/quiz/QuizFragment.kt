@@ -22,7 +22,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     private lateinit var optionsButtons: List<Button>
     private lateinit var continueButton: Button
 
-    private lateinit var viewModel: QuizViewModel
+    lateinit var viewModel: QuizViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
