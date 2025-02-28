@@ -31,5 +31,4 @@ interface GalleryEntryDao {
     suspend fun deleteAll() {
         getAll().forEach { delete(it) }
     }
-
 }

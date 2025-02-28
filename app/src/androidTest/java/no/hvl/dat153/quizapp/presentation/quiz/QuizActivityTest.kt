@@ -41,14 +41,6 @@ class QuizActivityTest : ActivityTestWithInMemoryDatabase() {
     fun testCorrectAnswerIncreasesCorrectScore() {
         val buttonIds = listOf(R.id.btnOption1, R.id.btnOption2, R.id.btnOption3)
 
-        // List all button texts for debugging
-        buttonIds.forEach { buttonId ->
-            onView(withId(buttonId)).check { view, _ ->
-                val buttonText = (view as Button).text.toString()
-                println("Button text: $buttonText")
-            }
-        }
-
         // Click the correct button
         val correctButtonId = findAnswerButton(buttonIds, isCorrect = true)
         assertNotNull(correctButtonId)
