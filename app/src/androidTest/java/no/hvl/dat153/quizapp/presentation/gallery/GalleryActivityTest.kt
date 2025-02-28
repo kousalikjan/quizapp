@@ -22,6 +22,7 @@ import kotlinx.coroutines.runBlocking
 import no.hvl.dat153.quizapp.R
 import no.hvl.dat153.quizapp.data.room.AppDatabase
 import no.hvl.dat153.quizapp.domain.models.GalleryEntry
+import no.hvl.dat153.quizapp.presentation.ActivityTestWithInMemoryDatabase
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
 import org.junit.Before
@@ -29,7 +30,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class GalleryActivityTest {
+class GalleryActivityTest : ActivityTestWithInMemoryDatabase() {
 
     private lateinit var scenario: ActivityScenario<GalleryActivity>
     private lateinit var recyclerView: RecyclerView
@@ -39,19 +40,6 @@ class GalleryActivityTest {
         initializeDatabase()
         Intents.init()
         launchActivityAndSetupVariables()
-    }
-
-    private fun initializeDatabase() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        AppDatabase.initializeInMemory(context)
-
-        val dao = AppDatabase.db.galleryEntryDao()
-
-        runBlocking {
-            dao.insert(GalleryEntry(name = "Option 1", uriString = "file://someuri"))
-            dao.insert(GalleryEntry(name = "Option 2", uriString = "file://someuri"))
-            dao.insert(GalleryEntry(name = "Option 3", uriString = "file://someuri"))
-        }
     }
 
     @After
@@ -79,7 +67,7 @@ class GalleryActivityTest {
     }
 
 
-    private fun launchActivityAndSetupVariables() {
+    override fun launchActivityAndSetupVariables() {
         scenario = ActivityScenario.launch(GalleryActivity::class.java)
         scenario.onActivity { activity ->
             recyclerView = activity.findViewById(R.id.recyclerView)

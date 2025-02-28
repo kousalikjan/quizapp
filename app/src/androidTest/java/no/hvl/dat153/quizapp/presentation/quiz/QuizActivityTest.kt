@@ -1,9 +1,7 @@
 package no.hvl.dat153.quizapp.presentation.quiz
 
-import android.content.Context
 import android.widget.Button
 import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -11,17 +9,15 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import junit.framework.TestCase.assertNotNull
-import kotlinx.coroutines.runBlocking
 import no.hvl.dat153.quizapp.R
-import no.hvl.dat153.quizapp.data.room.AppDatabase
-import no.hvl.dat153.quizapp.domain.models.GalleryEntry
+import no.hvl.dat153.quizapp.presentation.ActivityTestWithInMemoryDatabase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class QuizActivityTest {
+class QuizActivityTest : ActivityTestWithInMemoryDatabase() {
 
     private lateinit var scenario: ActivityScenario<QuizActivity>
     private lateinit var quizFragment: QuizFragment
@@ -29,7 +25,6 @@ class QuizActivityTest {
     private lateinit var incorrectText0: String
     private lateinit var correctText1: String
     private lateinit var incorrectText1: String
-
 
     @Before
     fun setup() {
@@ -39,7 +34,7 @@ class QuizActivityTest {
 
     @After
     fun tearDown() {
-        closeActivity()
+        scenario.close()
     }
 
     @Test
@@ -53,7 +48,6 @@ class QuizActivityTest {
                 println("Button text: $buttonText")
             }
         }
-
 
         // Click the correct button
         val correctButtonId = findAnswerButton(buttonIds, isCorrect = true)
@@ -73,20 +67,7 @@ class QuizActivityTest {
         checkScore(correctText = correctText1, incorrectText = incorrectText1)
     }
 
-    private fun initializeDatabase() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        AppDatabase.initializeInMemory(context)
-
-        val dao = AppDatabase.db.galleryEntryDao()
-
-        runBlocking {
-            dao.insert(GalleryEntry(name = "Option 1", uriString = "file://someuri"))
-            dao.insert(GalleryEntry(name = "Option 2", uriString = "file://someuri"))
-            dao.insert(GalleryEntry(name = "Option 3", uriString = "file://someuri"))
-        }
-    }
-
-    private fun launchActivityAndSetupVariables() {
+    override fun launchActivityAndSetupVariables() {
         scenario = ActivityScenario.launch(QuizActivity::class.java)
         scenario.onActivity { activity ->
             quizFragment = activity.supportFragmentManager.findFragmentById(R.id.fragment_container) as QuizFragment
@@ -95,10 +76,6 @@ class QuizActivityTest {
             correctText1 = activity.getString(R.string.correct, "1")
             incorrectText1 = activity.getString(R.string.incorrect, "1")
         }
-    }
-
-    private fun closeActivity() {
-        scenario.close()
     }
 
     private fun findAnswerButton(buttonIds: List<Int>, isCorrect: Boolean): Int? {
