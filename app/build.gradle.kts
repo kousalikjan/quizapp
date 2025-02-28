@@ -49,6 +49,7 @@ android {
 detekt {
     buildUponDefaultConfig = true
     config.setFrom("../detekt-config.yml")
+    source.setFrom(source.from + "src/androidTest/java" + "src/androidTest/kotlin")
 }
 
 dependencies {
