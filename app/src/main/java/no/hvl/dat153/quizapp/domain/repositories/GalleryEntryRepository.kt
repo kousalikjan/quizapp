@@ -12,7 +12,6 @@ import java.io.InputStream
 
 object GalleryEntryRepository {
 
-    private val dao by lazy { AppDatabase.db.galleryEntryDao() }
     private val imageLocalDataSource = ImageLocalDataSource()
 
     fun initialize(context: Context) {
@@ -24,30 +23,30 @@ object GalleryEntryRepository {
 
         getResourceEntries(context).filter { entry ->
             entry.uriString !in existingEntries.map { it.uriString }
-        }.forEach { dao.insert(it) }
+        }.forEach { AppDatabase.db.galleryEntryDao().insert(it) }
     }
 
     suspend fun getAll(): List<GalleryEntry> {
-        return dao.getAll()
+        return AppDatabase.db.galleryEntryDao().getAll()
     }
 
-    fun getAllStream() = dao.getAllStream()
+    fun getAllStream() = AppDatabase.db.galleryEntryDao().getAllStream()
 
-    suspend fun getCount(): Int = withContext(Dispatchers.IO) { dao.getCount() }
+    suspend fun getCount(): Int = withContext(Dispatchers.IO) { AppDatabase.db.galleryEntryDao().getCount() }
 
-    suspend fun getByName(name: String): GalleryEntry? = withContext(Dispatchers.IO) { dao.getByName(name) }
+    suspend fun getByName(name: String): GalleryEntry? = withContext(Dispatchers.IO) { AppDatabase.db.galleryEntryDao().getByName(name) }
 
     suspend fun insertEntry(name: String, inputStream: InputStream, storageDir: File) {
         withContext(Dispatchers.IO) {
             val imageUri = imageLocalDataSource.saveImage(inputStream, storageDir)
             val entry = GalleryEntry(name = name, uriString = imageUri.toString())
-            dao.insert(entry)
+            AppDatabase.db.galleryEntryDao().insert(entry)
         }
     }
 
     suspend fun deleteEntry(entry: GalleryEntry) {
         withContext(Dispatchers.IO) {
-            dao.delete(entry)
+            AppDatabase.db.galleryEntryDao().delete(entry)
             imageLocalDataSource.deleteImage(entry.getUri())
         }
     }

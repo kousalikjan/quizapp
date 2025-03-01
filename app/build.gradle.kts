@@ -40,6 +40,7 @@ android {
 detekt {
     buildUponDefaultConfig = true
     config.setFrom("../detekt-config.yml")
+    source.setFrom(source.from + "src/androidTest/java" + "src/androidTest/kotlin")
 }
 
 dependencies {
@@ -52,6 +53,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.android.lifecycle.viewmodel)
     implementation(libs.androidx.fragment)
+    implementation(libs.androidx.espresso.contrib)
 
     // Detekt
     detektPlugins(libs.detekt.formatting)
@@ -65,4 +67,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.espresso.intents)
 }
