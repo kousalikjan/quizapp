@@ -22,9 +22,9 @@ class MainActivityTest : ActivityTestWithInMemoryDatabase() {
 
     @Before
     fun setup() {
-        initializeDatabase()
         Intents.init()
         launchActivityAndSetupVariables()
+        initializeDatabase()
     }
 
     @After
@@ -34,15 +34,12 @@ class MainActivityTest : ActivityTestWithInMemoryDatabase() {
     }
 
     @Test
-    fun testGalleryButtonStartsGalleryActivity()
-    {
+    fun testGalleryButtonStartsGalleryActivity() {
         onView(withId(R.id.buttonGallery)).perform(click())
-
         intended(hasComponent(GalleryActivity::class.java.name))
     }
 
     override fun launchActivityAndSetupVariables() {
         scenario = ActivityScenario.launch(MainActivity::class.java)
     }
-
 }

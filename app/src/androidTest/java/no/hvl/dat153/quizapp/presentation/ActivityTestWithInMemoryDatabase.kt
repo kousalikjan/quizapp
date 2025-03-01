@@ -23,5 +23,4 @@ abstract class ActivityTestWithInMemoryDatabase {
     }
 
     protected abstract fun launchActivityAndSetupVariables()
-
 }

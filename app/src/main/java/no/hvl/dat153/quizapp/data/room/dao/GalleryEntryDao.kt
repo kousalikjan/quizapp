@@ -28,7 +28,6 @@ interface GalleryEntryDao {
     @Delete
     suspend fun delete(galleryEntry: GalleryEntry)
 
-    suspend fun deleteAll() {
-        getAll().forEach { delete(it) }
-    }
+    @Query("DELETE FROM GalleryEntry")
+    suspend fun deleteAll()
 }

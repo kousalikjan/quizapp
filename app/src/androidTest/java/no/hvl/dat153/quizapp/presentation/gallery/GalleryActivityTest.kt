@@ -63,7 +63,7 @@ class GalleryActivityTest : ActivityTestWithInMemoryDatabase() {
                     clickChildButtonWithId(R.id.buttonDelete)
                 )
             )
-        Thread.sleep(500) // TODO: Find a better way to wait for the recycler view to update
+        Thread.sleep(500) // Find a better way to wait for the RecyclerView to update
 
         itemCount = recyclerView.adapter?.itemCount ?: 0
         assertEquals(2, itemCount)
@@ -99,7 +99,7 @@ class GalleryActivityTest : ActivityTestWithInMemoryDatabase() {
         onView(withId(R.id.addEntryButtonSave))
             .perform(click())
 
-        Thread.sleep(500) // TODO: Find a better way to wait for the recycler view to update
+        Thread.sleep(500) // Find a better way to wait for the RecyclerView to update
 
         itemCount = recyclerView.adapter?.itemCount ?: 0
         assertEquals(4, itemCount)
@@ -128,5 +128,4 @@ class GalleryActivityTest : ActivityTestWithInMemoryDatabase() {
             }
         }
     }
-
 }

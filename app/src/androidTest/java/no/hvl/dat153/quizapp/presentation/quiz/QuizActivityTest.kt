@@ -96,5 +96,4 @@ class QuizActivityTest : ActivityTestWithInMemoryDatabase() {
     private fun clickButton(buttonId: Int) {
         onView(withId(buttonId)).perform(click())
     }
-
 }
