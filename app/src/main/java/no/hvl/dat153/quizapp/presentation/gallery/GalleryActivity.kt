@@ -16,7 +16,7 @@ import no.hvl.dat153.quizapp.presentation.addentry.AddEntryActivity
 
 class GalleryActivity : AppCompatActivity() {
 
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: GalleryAdapter
 
     private val sortStream = MutableStateFlow(SortType.ASC)
