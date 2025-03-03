@@ -8,7 +8,7 @@ class QuizActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_quiz)
+        setContentView(R.layout.fullscreen_fragment)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()

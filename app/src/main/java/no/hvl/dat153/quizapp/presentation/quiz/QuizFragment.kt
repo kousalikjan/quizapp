@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -60,6 +61,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     private fun observeScreenState() {
         lifecycleScope.launch {
             viewModel.screenStateStream
+                .flowWithLifecycle(lifecycle)
                 .filterNotNull()
                 .collect(::applyState)
         }
